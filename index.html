@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <style>
+    body::-webkit-scrollbar {
+      width: 0 !important;
+    }
+
+    ul::-webkit-scrollbar {
+      width: 0 !important;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .list-group {
+      max-height: 150px;
+      margin-bottom: 10px;
+      overflow: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+
+  <body class="bg-light">
+    <!-- Heading -->
+    <div class="container-fluid bg-light heading p-0">
+      <h2 class="display-5 text-center bg-dark p-3 text-white m-0">
+        Plan Your Week
+      </h2>
+    </div>
+    <!-- To Do List -->
+    <!-- Weeks -->
+    <!-- Week-1 -->
+    <div class="days container-fluid bg-light p-5">
+      <div class="row week">
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">Week's Targets</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="weeks" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="weeks-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="weeks-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="weeks-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">M O N</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="mon" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="mon-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="mon-add"
+                      type="submit"
+                    >
+                      <i class="far fa-check-circle"></i>
+                    </a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="mon-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">T U E</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="tue" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="tue-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="tue-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="tue-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">W E D</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="wed" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="wed-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="wed-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="wed-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row week">
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">T H U</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="thu" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="thu-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="thu-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="thu-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">F R I</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="fri" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="fri-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="fri-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="fri-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">S A T</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="sat" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="sat-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="sat-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="sat-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-lg mb-2">
+            <div class="card-body day">
+              <div class="row day-heading text-center">
+                <h5 class="card-title col-sm-8 col-xs-3">S U N</h5>
+                <div class="col-sm-4 col-xs-3">
+                  <div class="row d-flex justify-content-around">
+                    <a href="#" class="card-link"
+                      ><i
+                        class="fas fa-check-square dayListCheck"
+                        style="color:black"
+                      ></i
+                    ></a>
+                    <a href="#" class="card-link"
+                      ><i id="sun" class="fas fa-plus-circle addToDo"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div id="sun-inp" class="todoInput px-2">
+                <form class="container-fluid">
+                  <div class="form-group row m-0">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control form-control-sm rounded shawdow-lg"
+                        id="colFormLabelSm"
+                        placeholder="Add To Do"
+                      />
+                    </div>
+                    <a
+                      class="col-sm-2 p-0 text-center add"
+                      href="#"
+                      id="sun-add"
+                      type="submit"
+                      ><i class="far fa-check-circle"></i
+                    ></a>
+                  </div>
+                </form>
+              </div>
+              <div class="row add-todos pt-1">
+                <div class="col-sm-12">
+                  <ul id="sun-todos" class="list-group"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+.todoInput {
+  position: relative;
+  display: none;
+  /* top: -10px; */
+  -webkit-transition: all 2s ease;
+}
+
+.day {
+  background-color: blanchedalmond;
+}
+
+@media (max-width: 768px) {
+  .list-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .days {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
