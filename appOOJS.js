@@ -123,9 +123,13 @@ class UI {
     return [todoId, todoDay];
   }
 
-  addDaysTodo(dayName) {
+  addDaysTodo(dayName, max) {
     const todoInpDiv = document.getElementById(`${dayName}-inp`);
-    todoInpDiv.style.display = 'block';
+    if (max) {
+      todoInpDiv.style.display = 'block';
+    } else {
+      todoInpDiv.style.display = 'none';
+    }
   }
 
   addTodoToList(todo, reloaded) {
@@ -313,7 +317,16 @@ addDaysTodoBtn = document.querySelectorAll('.addDaysToDo');
 addDaysTodoBtn.forEach(function(day) {
   day.addEventListener('click', function(e) {
     const ui = new UI();
-    ui.addDaysTodo(e.target.id);
+
+    if (e.target.classList.contains('fa-plus-circle')) {
+      e.target.classList.remove('fa-plus-circle');
+      e.target.classList.add('fa-minus-circle');
+      ui.addDaysTodo(e.target.id, true);
+    } else {
+      e.target.classList.remove('fa-minus-circle');
+      e.target.classList.add('fa-plus-circle');
+      ui.addDaysTodo(e.target.id, false);
+    }
     e.preventDefault();
   });
 });
@@ -343,6 +356,7 @@ addTodoListBtn.forEach(function(check) {
     Store.addTodo(newtodo);
     // Set Inp Field
     todo.value = '';
+
     e.preventDefault();
   });
 });
