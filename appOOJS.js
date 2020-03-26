@@ -233,6 +233,18 @@ class Store {
   }
 
   static displayTodos() {
+    const daysTodos = Store.getTodos();
+
+    days.forEach(function(day) {
+      const ui = new UI();
+      daysTodos[day].forEach(function(todo) {
+        let newTodo = new Todo(todo.day, todo.todo, todo.todoId, todo.done);
+        ui.addTodoToList(newTodo);
+      });
+    });
+  }
+
+  static getWeekStatus() {
     // Set Completed, Pending and missed todos
     let completed = parseInt(document.getElementById('completed').textContent),
       pending = parseInt(document.getElementById('pending').textContent),
@@ -256,15 +268,6 @@ class Store {
     } else {
       missed = localStorage.getItem('missed');
     }
-    const daysTodos = Store.getTodos();
-
-    days.forEach(function(day) {
-      const ui = new UI();
-      daysTodos[day].forEach(function(todo) {
-        let newTodo = new Todo(todo.day, todo.todo, todo.todoId, todo.done);
-        ui.addTodoToList(newTodo);
-      });
-    });
   }
 }
 
