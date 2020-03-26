@@ -328,7 +328,8 @@ addTodoListBtn.forEach(function(check) {
     let day = e.target.parentElement.id.split('-')[0],
       // inp value
       todo =
-        e.target.parentElement.parentElement.firstElementChild.firstElementChild,
+        e.target.parentElement.parentElement.firstElementChild
+          .firstElementChild,
       // todoId
       todoId = Store.getTodoFor(day).length + 1,
       // done
@@ -340,6 +341,7 @@ addTodoListBtn.forEach(function(check) {
 
     // Store in LS:
     Store.addTodo(newtodo);
+    // Set Inp Field
     todo.value = '';
     e.preventDefault();
   });
