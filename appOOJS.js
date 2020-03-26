@@ -86,7 +86,15 @@ const todosLS = {
 const days = ['weeks', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
 class UI {
-  getTodoIdDay(actionBtn, allDay) {
+
+  setWeekStatus(weekStatus) {
+    document.getElementById('completed').innerHTML = '';
+    document.getElementById('completed').innerHTML = weekStatus[0];
+    document.getElementById('pending').innerHTML = '';
+    document.getElementById('pending').innerHTML = weekStatus[1];
+  }
+  
+  getTodoIdDay(actionBtn) {
     // traverse upward (Event Deligation)
     let parent = actionBtn;
     console.log(actionBtn);
@@ -108,7 +116,7 @@ class UI {
     const ui = new UI();
     // if actionBtn is checkBtn
     if (actionBtn.classList.contains('todoListCheck')) {
-      ui.toggleCheckTodo(actionBtn, todoTitle, allDay);
+      ui.toggleCheckTodo(actionBtn, todoTitle);
     } else if (actionBtn.classList.contains('todoListRemove')) {
       ui.deleteTodo(parent);
     }
@@ -122,6 +130,16 @@ class UI {
   }
 
   addTodoToList(todo) {
+
+    let weekStatus = Store.getWeekStatus();
+    // Update pending in LS
+    weekStatus[1] += 1;
+    Store.setWeekStatus(weekStatus);
+
+    // Update pending in UI
+    const ui = new UI();
+    ui.setWeekStatus(weekStatus);
+
     // Append to child of ul of day:
     const daysListGrp = document.querySelector(`#${todo.day}-todos`);
 
@@ -138,38 +156,50 @@ class UI {
   }
 
   deleteTodo(deleteTodo) {
+    let weekStatus = Store.getWeekStatus();
+    let todoStatus = deleteTodo.querySelector('.todoListCheck').style.color;
+    if (todoStatus === 'black') {
+      weekStatus[1] -= 1;
+    } 
+
+    // Update weekStatus in UI
+    const ui = new UI();
+    ui.setWeekStatus(weekStatus);
+    // Update weekStatus in LS
+    Store.setWeekStatus(weekStatus)
     deleteTodo.remove();
+
+
   }
 
-  toggleCheckTodo(checkBtn, todoTitle, allDay) {
+  toggleCheckTodo(checkBtn, todoTitle) {
+    let weekStatus = Store.getWeekStatus();
     // check checkBtn to green
-    if (allDay) {
-      if (checkBtn.style.color === 'black') {
-        checkBtn.style.color = 'green';
+    // console.log(checkBtn, todoTitle);
+    checkBtn.style.color === 'green'
+      ? (checkBtn.style.color = 'black')
+      : (checkBtn.style.color = 'green');
 
-        // Strike todo if done is false
-        let title = todoTitle.innerHTML;
-        todoTitle.textContent = '';
-        if (title[0] !== '<') {
-          todoTitle.innerHTML = `<strike style = "color: green">${title}</strike>`;
-        }
-      }
+    // Strike todo if done is false
+    let title = todoTitle.innerHTML;
+    todoTitle.textContent = '';
+    if (title[0] === '<') {
+      todoTitle.textContent = title.split('>')[1].split('<')[0];
+      // console.log(title);
+      weekStatus[1] += 1;
+      weekStatus[0] -= 1;
     } else {
-      // console.log(checkBtn, todoTitle);
-      checkBtn.style.color === 'green'
-        ? (checkBtn.style.color = 'black')
-        : (checkBtn.style.color = 'green');
-
-      // Strike todo if done is false
-      let title = todoTitle.innerHTML;
-      todoTitle.textContent = '';
-      if (title[0] === '<') {
-        todoTitle.textContent = title.split('>')[1].split('<')[0];
-        // console.log(title);
-      } else {
-        todoTitle.innerHTML = `<strike style = "color: green">${title}</strike>`;
-      }
+      todoTitle.innerHTML = `<strike style = "color: green">${title}</strike>`;
+      weekStatus[0] += 1;
+      weekStatus[1] -= 1;
     }
+
+    // Update weekStatus in UI
+    const ui = new UI();
+    ui.setWeekStatus(weekStatus);
+    
+    // Update weekStatus in LS
+    Store.setWeekStatus(weekStatus);
   }
 }
 
@@ -233,6 +263,15 @@ class Store {
   }
 
   static displayTodos() {
+    // Show week statu
+    let weekStat = Store.getWeekStatus();
+
+    let completed = weekStat[0];
+    let pending = weekStat[1];
+    document.getElementById('completed').textContent = completed;
+    document.getElementById('pending').textContent = pending;
+
+    // Show todos
     const daysTodos = Store.getTodos();
 
     days.forEach(function(day) {
@@ -245,29 +284,24 @@ class Store {
   }
 
   static getWeekStatus() {
-    // Set Completed, Pending and missed todos
-    let completed = parseInt(document.getElementById('completed').textContent),
-      pending = parseInt(document.getElementById('pending').textContent),
-      missed = parseInt(document.getElementById('missed').textContent);
-
+    let completed, pending;
     if (localStorage.getItem('completed') === null) {
       completed = 0;
-      localStorage.setItem('completed', 0);
     } else {
-      completed = localStorage.getItem('completed');
+      completed = JSON.parse(localStorage.getItem('completed'));
     }
-    if (localStorage.getItem('panding') === null) {
-      panding = 0;
-      localStorage.setItem('panding', 0);
+
+    if (localStorage.getItem('pending') === null) {
+      pending = 0;
     } else {
-      panding = localStorage.getItem('panding');
+      pending = JSON.parse(localStorage.getItem('pending'));
     }
-    if (localStorage.getItem('missed') === null) {
-      missed = 0;
-      localStorage.setItem('missed', 0);
-    } else {
-      missed = localStorage.getItem('missed');
-    }
+    return [completed, pending];
+  }
+
+  static setWeekStatus(weekStatus) {
+    localStorage.setItem('completed', weekStatus[0]);
+    localStorage.setItem('pending', weekStatus[1]);
   }
 }
 
@@ -321,7 +355,7 @@ todoItems.forEach(function(listGrp) {
       const ui = new UI();
 
       // Check in UI
-      let todoIdDay = ui.getTodoIdDay(e.target, false);
+      let todoIdDay = ui.getTodoIdDay(e.target);
       Store.updateDoneTodosInLS(todoIdDay[0], todoIdDay[1]);
       e.preventDefault();
     } else if (e.target.classList.contains('todoListRemove')) {
@@ -330,7 +364,7 @@ todoItems.forEach(function(listGrp) {
       const ui = new UI();
 
       // Remove from UI
-      let todoIdDay = ui.getTodoIdDay(e.target, false);
+      let todoIdDay = ui.getTodoIdDay(e.target);
       console.log(todoIdDay[0], todoIdDay[1]);
 
       // Remove from LS
