@@ -341,6 +341,7 @@ addTodoListBtn.forEach(function(check) {
 
     // Store in LS:
     Store.addTodo(newtodo);
+    todo = '';
     e.preventDefault();
   });
 });
