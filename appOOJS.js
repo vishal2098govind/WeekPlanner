@@ -328,20 +328,19 @@ addTodoListBtn.forEach(function(check) {
     let day = e.target.parentElement.id.split('-')[0],
       // inp value
       todo =
-        e.target.parentElement.parentElement.firstElementChild.firstElementChild
-          .value,
+        e.target.parentElement.parentElement.firstElementChild.firstElementChild,
       // todoId
       todoId = Store.getTodoFor(day).length + 1,
       // done
       done = false;
 
-    const newtodo = new Todo(day, todo, todoId, done);
+    const newtodo = new Todo(day, todo.value, todoId, done);
 
     ui.addTodoToList(newtodo, false);
 
     // Store in LS:
     Store.addTodo(newtodo);
-    todo = '';
+    todo.value = '';
     e.preventDefault();
   });
 });
