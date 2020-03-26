@@ -86,14 +86,13 @@ const todosLS = {
 const days = ['weeks', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
 class UI {
-
   setWeekStatus(weekStatus) {
     document.getElementById('completed').innerHTML = '';
     document.getElementById('completed').innerHTML = weekStatus[0];
     document.getElementById('pending').innerHTML = '';
     document.getElementById('pending').innerHTML = weekStatus[1];
   }
-  
+
   getTodoIdDay(actionBtn) {
     // traverse upward (Event Deligation)
     let parent = actionBtn;
@@ -129,12 +128,13 @@ class UI {
     todoInpDiv.style.display = 'block';
   }
 
-  addTodoToList(todo) {
-
+  addTodoToList(todo, reloaded) {
     let weekStatus = Store.getWeekStatus();
-    // Update pending in LS
-    weekStatus[1] += 1;
-    Store.setWeekStatus(weekStatus);
+    if (reloaded === false) {
+      // Update pending in LS
+      weekStatus[1] += 1;
+      Store.setWeekStatus(weekStatus);
+    }
 
     // Update pending in UI
     const ui = new UI();
@@ -160,16 +160,14 @@ class UI {
     let todoStatus = deleteTodo.querySelector('.todoListCheck').style.color;
     if (todoStatus === 'black') {
       weekStatus[1] -= 1;
-    } 
+    }
 
     // Update weekStatus in UI
     const ui = new UI();
     ui.setWeekStatus(weekStatus);
     // Update weekStatus in LS
-    Store.setWeekStatus(weekStatus)
+    Store.setWeekStatus(weekStatus);
     deleteTodo.remove();
-
-
   }
 
   toggleCheckTodo(checkBtn, todoTitle) {
@@ -197,7 +195,7 @@ class UI {
     // Update weekStatus in UI
     const ui = new UI();
     ui.setWeekStatus(weekStatus);
-    
+
     // Update weekStatus in LS
     Store.setWeekStatus(weekStatus);
   }
@@ -263,13 +261,10 @@ class Store {
   }
 
   static displayTodos() {
-    // Show week statu
+    // Show week status in UI
     let weekStat = Store.getWeekStatus();
-
-    let completed = weekStat[0];
-    let pending = weekStat[1];
-    document.getElementById('completed').textContent = completed;
-    document.getElementById('pending').textContent = pending;
+    const ui = new UI();
+    ui.setWeekStatus(weekStat);
 
     // Show todos
     const daysTodos = Store.getTodos();
@@ -278,7 +273,7 @@ class Store {
       const ui = new UI();
       daysTodos[day].forEach(function(todo) {
         let newTodo = new Todo(todo.day, todo.todo, todo.todoId, todo.done);
-        ui.addTodoToList(newTodo);
+        ui.addTodoToList(newTodo, true);
       });
     });
   }
@@ -296,12 +291,13 @@ class Store {
     } else {
       pending = JSON.parse(localStorage.getItem('pending'));
     }
+    console.log(completed, pending);
     return [completed, pending];
   }
 
   static setWeekStatus(weekStatus) {
-    localStorage.setItem('completed', weekStatus[0]);
-    localStorage.setItem('pending', weekStatus[1]);
+    localStorage.setItem('completed', JSON.stringify(weekStatus[0]));
+    localStorage.setItem('pending', JSON.stringify(weekStatus[1]));
   }
 }
 
@@ -339,7 +335,7 @@ addTodoListBtn.forEach(function(check) {
 
     const newtodo = new Todo(day, todo, todoId, done);
 
-    ui.addTodoToList(newtodo);
+    ui.addTodoToList(newtodo, false);
 
     // Store in LS:
     Store.addTodo(newtodo);
