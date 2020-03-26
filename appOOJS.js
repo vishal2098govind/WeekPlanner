@@ -171,8 +171,6 @@ class UI {
       }
     }
   }
-
-  checkDaysTodo() {}
 }
 
 // Local Storage
@@ -290,7 +288,6 @@ addTodoListBtn.forEach(function(check) {
 });
 
 // Action buttons for each todo:
-console.log(todoItems);
 todoItems.forEach(function(listGrp) {
   listGrp.addEventListener('click', function(e) {
     if (e.target.classList.contains('todoListCheck')) {
