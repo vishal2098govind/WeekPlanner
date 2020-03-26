@@ -233,6 +233,29 @@ class Store {
   }
 
   static displayTodos() {
+    // Set Completed, Pending and missed todos
+    let completed = parseInt(document.getElementById('completed').textContent),
+      pending = parseInt(document.getElementById('pending').textContent),
+      missed = parseInt(document.getElementById('missed').textContent);
+
+    if (localStorage.getItem('completed') === null) {
+      completed = 0;
+      localStorage.setItem('completed', 0);
+    } else {
+      completed = localStorage.getItem('completed');
+    }
+    if (localStorage.getItem('panding') === null) {
+      panding = 0;
+      localStorage.setItem('panding', 0);
+    } else {
+      panding = localStorage.getItem('panding');
+    }
+    if (localStorage.getItem('missed') === null) {
+      missed = 0;
+      localStorage.setItem('missed', 0);
+    } else {
+      missed = localStorage.getItem('missed');
+    }
     const daysTodos = Store.getTodos();
 
     days.forEach(function(day) {
