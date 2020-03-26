@@ -160,6 +160,8 @@ class UI {
     let todoStatus = deleteTodo.querySelector('.todoListCheck').style.color;
     if (todoStatus === 'black') {
       weekStatus[1] -= 1;
+    } else {
+      weekStatus[0] -= 1;
     }
 
     // Update weekStatus in UI
